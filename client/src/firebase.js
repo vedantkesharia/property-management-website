@@ -16,16 +16,6 @@ const firebaseConfig = {
 };
 
 
-//old project works 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBzZXlBJuGkh1zpXpIFtXwZxDWb00YnsuA",
-//   authDomain: "fir-4-uploadfiles.firebaseapp.com",
-//   projectId: "fir-4-uploadfiles",
-//   storageBucket: "fir-4-uploadfiles.appspot.com",
-//   messagingSenderId: "567145842088",
-//   appId: "1:567145842088:web:23e5e367fe348662aac99d",
-//   measurementId: "G-42MH6HYYCY"
-// };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

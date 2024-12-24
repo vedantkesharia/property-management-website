@@ -5,6 +5,9 @@ import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
 import ListingItem from "../components/ListingItem";
+import image1 from "../images/image2.jpeg"
+import image2 from "../images/image3.jpeg"
+import image3 from "../images/image4.jpeg"
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -47,62 +50,84 @@ export default function Home() {
     fetchOfferListings();
   }, []);
 
+
+  const images = [
+   image1,
+   image2,image3
+  ]; // Replace with your actual image paths
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prevImage) => (prevImage + 1) % images.length);
+    }, 4000); // Change image every 4 seconds
+    return () => clearInterval(interval);
+  }, [images.length]);
   return (
     <div>
       {/* Updated Hero Section */}
-      <div className="relative bg-gray-100">
-        <div className="flex flex-col lg:flex-row justify-between p-8 lg:p-28 px-3 max-w-6xl mx-auto">
-          {/* Left Side - Text Content */}
-          <div className="flex flex-col gap-6 lg:w-1/2">
-            <h1 className="text-3xl lg:text-5xl font-light tracking-wider text-gray-800">
-              INTRODUCTORY
-              <br />
-              TEXT
-            </h1>
-            <p className="text-gray-600 text-sm lg:text-base">
-              lorem ipsum dolor sit amet, consectetur adipiscing elit. aliquam aliquam nisi nisi, eu imperdiet ex ullamcorper eu.
-            </p>
-            <Link
-              to={"/search"}
-              className="text-xs sm:text-sm text-blue-800 font-bold hover:underline"
-            >
-              Let&apos;s get started now
-            </Link>
-          </div>
+      <div
+      className="relative bg-gray-100 h-screen flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${images[currentImage]})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="bg-gray-900 bg-opacity-50 h-full flex flex-col lg:flex-row justify-between p-8 lg:p-28 px-3 max-w-6xl mx-auto">
+        {/* Left Side - Text Content */}
+        <div className="flex flex-col gap-6 lg:w-1/2 text-white">
+          <h1 className="text-3xl lg:text-5xl font-light tracking-wider">
+            INTRODUCTORY
+            <br />
+            TEXT
+          </h1>
+          <p className="text-gray-300 text-sm lg:text-base">
+            lorem ipsum dolor sit amet, consectetur adipiscing elit. aliquam
+            aliquam nisi nisi, eu imperdiet ex ullamcorper eu.
+          </p>
+          <Link
+            to={"/search"}
+            className="text-xs sm:text-sm text-blue-300 font-bold hover:underline"
+          >
+            Let&apos;s get started now
+          </Link>
+        </div>
 
-          {/* Right Side - Filter Tool */}
-          <div className="mt-8 lg:mt-0 lg:w-1/3">
-            <div className="bg-gray-700 p-6 rounded-lg shadow-lg">
-              <h2 className="text-white text-xl mb-6">AI FILTER TOOL</h2>
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Location"
-                  className="w-full p-2 rounded border border-gray-300"
-                />
-                <input
-                  type="text"
-                  placeholder="Property Type"
-                  className="w-full p-2 rounded border border-gray-300"
-                />
-                <input
-                  type="text"
-                  placeholder="Price Range"
-                  className="w-full p-2 rounded border border-gray-300"
-                />
-                <input
-                  type="text"
-                  placeholder="Contract Type"
-                  className="w-full p-2 rounded border border-gray-300"
-                />
-                <button className="w-full bg-tan-400 text-gray-700 p-2 rounded bg-[#BEB19B] hover:bg-[#A89883] transition-colors">
-                  SUBMIT
-                </button>
-              </div>
+        {/* Right Side - Filter Tool */}
+        <div className="mt-8 lg:mt-0 lg:w-1/3">
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 className="text-white text-xl mb-6">AI FILTER TOOL</h2>
+            <div className="space-y-4">
+              <input
+                type="text"
+                placeholder="Location"
+                className="w-full p-2 rounded border border-gray-500"
+              />
+              <input
+                type="text"
+                placeholder="Property Type"
+                className="w-full p-2 rounded border border-gray-500"
+              />
+              <input
+                type="text"
+                placeholder="Price Range"
+                className="w-full p-2 rounded border border-gray-500"
+              />
+              <input
+                type="text"
+                placeholder="Contract Type"
+                className="w-full p-2 rounded border border-gray-500"
+              />
+              <button className="w-full bg-[#BEB19B] text-gray-900 p-2 rounded hover:bg-[#A89883] transition-colors">
+                SUBMIT
+              </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
       <div className="w-full flex flex-col items-center justify-center my-16 px-4">
       <h2 className="text-4xl md:text-5xl lg:text-6xl text-gray-800 font-light tracking-wider text-center">
         FEATURED PROPERTIES

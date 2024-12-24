@@ -86,12 +86,12 @@ export default function Home() {
             lorem ipsum dolor sit amet, consectetur adipiscing elit. aliquam
             aliquam nisi nisi, eu imperdiet ex ullamcorper eu.
           </p>
-          <Link
+          {/* <Link
             to={"/search"}
             className="text-xs sm:text-sm text-blue-300 font-bold hover:underline"
           >
             Let&apos;s get started now
-          </Link>
+          </Link> */}
         </div>
 
         {/* Right Side - Filter Tool */}

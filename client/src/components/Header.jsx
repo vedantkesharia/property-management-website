@@ -52,7 +52,7 @@ export default function Header() {
               HOME
             </li>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/search"}>
             <li className="hidden sm:inline text-white hover:underline">
               PROPERTIES
             </li>

@@ -49,6 +49,14 @@ export default function ListingItem({ listing }) {
                 : `${listing.bathrooms} bath`}
             </div>
           </div>
+
+          {/* {listing.mapUrl && (
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold">Location</h3>
+              <div dangerouslySetInnerHTML={{ __html: listing.mapUrl }} />
+            </div>
+          )} */}
+
         </div>
       </Link>
     </div>
@@ -68,5 +76,6 @@ ListingItem.propTypes = {
     bedrooms: PropTypes.number.isRequired,
     bathrooms: PropTypes.number.isRequired,
     imageUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
+    // mapUrl: PropTypes.string, 
   }).isRequired,
 };

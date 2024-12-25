@@ -8,11 +8,15 @@ import ListingItem from "../components/ListingItem";
 import image1 from "../images/image2.jpeg"
 import image2 from "../images/image3.jpeg"
 import image3 from "../images/image4.jpeg"
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
+
   SwiperCore.use([Navigation]);
 
   useEffect(() => {
@@ -50,10 +54,10 @@ export default function Home() {
     fetchOfferListings();
   }, []);
 
-
   const images = [
-   image1,
-   image2,image3
+    { url: image1,  title: "FIND THE PERFECT HOME FOR YOU",description: "Alpha Real Estate is a prestigious real estate brokerage and advisory service firm, having extensive experience of more than 10 years in the real estate market in Dubai. The company specializes in connecting buyers, sellers, and renters globally." },
+    { url: image2, title: "FIND YOUR DREAM PROPERTY",description:"Our dedicated team offers unparalleled expertise, ensuring you discover the ideal property for your lifestyle and investment goals."},
+    { url: image3, title: "TRUSTED REAL ESTATE PARTNERS", description:"Join countless satisfied clients who have trusted us with their real estate journey in the UAE and beyond."}
   ]; // Replace with your actual image paths
   const [currentImage, setCurrentImage] = useState(0);
 
@@ -63,77 +67,97 @@ export default function Home() {
     }, 4000); // Change image every 4 seconds
     return () => clearInterval(interval);
   }, [images.length]);
-  return (
-    <div>
-      {/* Updated Hero Section */}
-      <div
-      className="relative bg-gray-100 h-screen flex items-center justify-center"
-      style={{
-        backgroundImage: `url(${images[currentImage]})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="bg-gray-900 bg-opacity-50 h-full flex flex-col lg:flex-row justify-between p-8 lg:p-28 px-3 max-w-6xl mx-auto">
-        {/* Left Side - Text Content */}
-        <div className="flex flex-col gap-6 lg:w-1/2 text-white">
-          <h1 className="text-3xl lg:text-5xl font-light tracking-wider">
-            INTRODUCTORY
-            <br />
-            TEXT
-          </h1>
-          <p className="text-gray-300 text-sm lg:text-base">
-            lorem ipsum dolor sit amet, consectetur adipiscing elit. aliquam
-            aliquam nisi nisi, eu imperdiet ex ullamcorper eu.
-          </p>
-          {/* <Link
-            to={"/search"}
-            className="text-xs sm:text-sm text-blue-300 font-bold hover:underline"
-          >
-            Let&apos;s get started now
-          </Link> */}
-        </div>
 
-        {/* Right Side - Filter Tool */}
-        <div className="mt-8 lg:mt-0 lg:w-1/3">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-white text-xl mb-6">AI FILTER TOOL</h2>
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Location"
-                className="w-full p-2 rounded border border-gray-500"
-              />
-              <input
-                type="text"
-                placeholder="Property Type"
-                className="w-full p-2 rounded border border-gray-500"
-              />
-              <input
-                type="text"
-                placeholder="Price Range"
-                className="w-full p-2 rounded border border-gray-500"
-              />
-              <input
-                type="text"
-                placeholder="Contract Type"
-                className="w-full p-2 rounded border border-gray-500"
-              />
-              <button className="w-full bg-[#BEB19B] text-gray-900 p-2 rounded hover:bg-[#A89883] transition-colors">
-                SUBMIT
-              </button>
-            </div>
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+  return (
+    <div className="font-serif">
+      {/* Updated Hero Section */}
+      <div className="relative flex items-start justify-start" style={{ height: "100vh", width: "100%" }}>
+  {/* Static Textbox */}
+  <div className="absolute right-32 top-12 z-10">
+    <div className="bg-white bg-opacity-30 p-6 rounded-lg shadow-lg border border-yellow-300 max-w-xs">
+      <h4 className="text-gray-800 text-base font-semibold">ENTER CITY OR STATE</h4>
+      <div className="space-y-4">
+        <input
+          type="text"
+          placeholder="City or State"
+          className="w-full p-2 rounded border border-gray-400 focus:outline-none"
+        />
+        <h4 className="text-gray-800 text-base font-semibold">CHOOSE TYPE</h4>
+        <select className="w-full p-2 rounded border border-gray-400 focus:outline-none">
+          <option>Contract Type</option>
+          <option>Rent</option>
+          <option>Sale</option>
+        </select>
+        <h4 className="text-gray-800 text-base font-semibold">PROPERTY TYPE</h4>
+        <select className="w-full p-2 rounded border border-gray-400 focus:outline-none">
+          <option>Property Type</option>
+          <option>Apartment</option>
+          <option>Villa</option>
+          <option>Office</option>
+        </select>
+        <h4 className="text-gray-800 text-base font-semibold">BEDROOM</h4>
+        <select className="w-full p-2 rounded border border-gray-400 focus:outline-none">
+          <option>Bedroom</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3+</option>
+        </select>
+        <h4 className="text-gray-800 text-base font-semibold">MAX PRICE</h4>
+        <input
+          type="number"
+          placeholder="Max Price"
+          className="w-full p-2 rounded border border-gray-400 focus:outline-none"
+        />
+        <button className="w-full bg-yellow-400 text-gray-800 p-2 rounded hover:bg-yellow-500 transition-colors">
+          SEARCH
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Slider */}
+  <Slider {...settings} className="w-full h-full">
+    {images.map((image, index) => (
+      <div key={index} className="relative h-full w-full">
+        <div
+          className="flex items-center justify-start h-full w-full"
+          style={{
+            backgroundImage: `url(${image.url})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            height: "100vh",
+            width: "100%",
+          }}
+        >
+          {/* Sliding Text */}
+          <div className="text-left p-2 rounded align-center ml-2 max-w-lg">
+            <h1 className="text-3xl lg:text-5xl font-bold tracking-wider text-white mb-4">
+              {image.title}
+            </h1>
+            <p className="text-white text-xl lg:text-xl">{image.description}</p>
           </div>
         </div>
       </div>
-    </div>
+    ))}
+  </Slider>
+</div>
 
       <div className="w-full flex flex-col items-center justify-center my-16 px-4">
-      <h2 className="text-4xl md:text-5xl lg:text-6xl text-gray-800 font-light tracking-wider text-center">
-        FEATURED PROPERTIES
-      </h2>
-      <div className="w-48 md:w-64 h-[1px] bg-gray-300 mt-4"></div>
-     </div>
+        <h2 className="text-4xl md:text-5xl lg:text-6xl text-gray-800 font-light tracking-wider text-center">
+          FEATURED PROPERTIES
+        </h2>
+        <div className="w-48 md:w-64 h-[1px] bg-gray-300 mt-4"></div>
+      </div>
       {/* Swiper */}
       <Swiper navigation>
         {offerListings &&
@@ -193,7 +217,7 @@ export default function Home() {
             </div>
           </div>
         )}
-    
+
 
         {saleListings && saleListings.length > 0 && (
           <div className="w-full lg:w-auto mx-auto lg:flex lg:flex-col">
@@ -216,46 +240,46 @@ export default function Home() {
           </div>
         )}
       </div>
-      
+
       {/* services */}
       <div className="w-full flex flex-col items-center px-4 py-16">
-      {/* Heading with line decoration */}
-      <div className="w-full flex flex-col items-center justify-center mb-16">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl text-gray-800 font-light tracking-wider text-center">
-          OUR SERVICES
-        </h2>
-        <div className="w-48 md:w-64 h-[1px] bg-[#BEB19B] mt-4"></div>
-      </div>
+        {/* Heading with line decoration */}
+        <div className="w-full flex flex-col items-center justify-center mb-16">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-gray-800 font-light tracking-wider text-center">
+            OUR SERVICES
+          </h2>
+          <div className="w-48 md:w-64 h-[1px] bg-[#BEB19B] mt-4"></div>
+        </div>
 
-      {/* Content Container */}
-      <div className="w-full flex flex-col lg:flex-row">
-      {/* Image Panel */}
-      <div className="w-full lg:w-1/2 h-[600px]">
-        <img 
-          src="https://images.unsplash.com/photo-1494256997604-768d1f608cac?w=800&auto=format&fit=crop&q=80"
-          alt="Toronto city skyline at night"
-          className="w-full h-full object-cover"
-        />
-      </div>
+        {/* Content Container */}
+        <div className="w-full flex flex-col lg:flex-row">
+          {/* Image Panel */}
+          <div className="w-full lg:w-1/2 h-[600px]">
+            <img
+              src="https://images.unsplash.com/photo-1494256997604-768d1f608cac?w=800&auto=format&fit=crop&q=80"
+              alt="Toronto city skyline at night"
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-      {/* Text Panel */}
-      <div className="w-full lg:w-1/2 bg-[#1C2536] text-white p-8 lg:p-16 flex flex-col justify-center h-[600px]">
-        <h3 className="text-4xl font-light mb-8">
-          Service
-        </h3>
-        <p className="text-gray-300 mb-12 leading-relaxed">
-          lorem ipsum dolor sit amet, consectetur adipiscing elit. aliquam aliquam 
-          nisi nisi, eu imperdiet ex ullamcorper eu. lorem ipsum dolor sit amet, 
-          consectetur adipiscing elit. aliquam aliquam nisi nisi, eu imperdiet ex 
-          ullamcorper eu.
-        </p>
-        <button className="border border-white text-white px-8 py-2 w-fit hover:bg-white hover:text-[#1C2536] transition-colors duration-300">
-          CONTACT US
-        </button>
-      </div>
-    </div>
+          {/* Text Panel */}
+          <div className="w-full lg:w-1/2 bg-[#1C2536] text-white p-8 lg:p-16 flex flex-col justify-center h-[600px]">
+            <h3 className="text-4xl font-light mb-8">
+              Service
+            </h3>
+            <p className="text-gray-300 mb-12 leading-relaxed">
+              lorem ipsum dolor sit amet, consectetur adipiscing elit. aliquam aliquam
+              nisi nisi, eu imperdiet ex ullamcorper eu. lorem ipsum dolor sit amet,
+              consectetur adipiscing elit. aliquam aliquam nisi nisi, eu imperdiet ex
+              ullamcorper eu.
+            </p>
+            <button className="border border-white text-white px-8 py-2 w-fit hover:bg-white hover:text-[#1C2536] transition-colors duration-300">
+              CONTACT US
+            </button>
+          </div>
+        </div>
 
-    
+
       </div>
     </div>
 

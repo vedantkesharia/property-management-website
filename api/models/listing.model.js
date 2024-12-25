@@ -6,12 +6,6 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    description: {
-      type: String,
-      required: true,
-    },
-
     address: {
       type: String,
       required: true,
@@ -25,6 +19,26 @@ const listingSchema = new mongoose.Schema(
     discountPrice: {
       type: Number,
       required: true,
+    },
+    propertyType: {
+      type: String,
+      required: true,
+    },
+    features: {
+      type: Array,
+      required: true,
+    },
+    communityFeatures: {
+      type: Array,
+      required: false,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    floorPlan: {
+      type: String,
+      required: false,
     },
 
     bathrooms: {
@@ -57,16 +71,11 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
 
-    offer: {
-      type: Boolean,
-      required: true,
-    },
-
     imageUrls: {
       type: Array,
       required: true,
     },
-    mapUrl:{
+    mapUrl: {
       type: String,
       required: true,
     },

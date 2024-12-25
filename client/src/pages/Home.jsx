@@ -158,23 +158,7 @@ export default function Home() {
         </h2>
         <div className="w-48 md:w-64 h-[1px] bg-gray-300 mt-4"></div>
       </div>
-      {/* Swiper */}
-      <Swiper navigation>
-        {offerListings &&
-          offerListings.length > 0 &&
-          offerListings.map((listing, index) => (
-            <SwiperSlide key={listing._id || index}>
-              <div
-                style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: "cover",
-                }}
-                className="h-[500px]"
-              ></div>
-            </SwiperSlide>
-          ))}
-      </Swiper>
-
+    
       {/* Listings results for offer, sale and rent */}
       <div className="max-w-8xl p-3 items-center flex flex-col gap-8 my-10">
         {offerListings && offerListings.length > 0 && (

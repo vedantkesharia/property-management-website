@@ -61,6 +61,11 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
 
+    area:{
+      type: Number,
+      required: true,
+    },
+
     type: {
       type: String,
       required: true,

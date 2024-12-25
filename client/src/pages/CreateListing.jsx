@@ -28,10 +28,11 @@ export default function CreateListing() {
     regularPrice: 50,
     discountPrice: 0,
     offer: false,
-    sale: false,
+    // sale: false,
     parking: false,
     furnished: false,
     mapUrl: "", // Add map field
+    area:""
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -107,6 +108,22 @@ export default function CreateListing() {
         type: e.target.id,
       });
     }
+
+    if (e.target.id === "propertyType") {
+      setFormData({
+        ...formData,
+        propertyType: e.target.value,
+      });
+    }
+
+    if (e.target.id === "type") {
+      setFormData({
+        ...formData,
+        type: e.target.value,
+      });
+    }
+
+
 
     if (
       e.target.id === "parking" ||
@@ -255,6 +272,20 @@ export default function CreateListing() {
       <option value="condo">Condo</option>
     </select>
 
+{/* Type */}
+    <select
+      id="type"
+      required
+      className="border p-3 rounded-lg"
+      onChange={handleChange}
+      value={formData.type}
+    >
+      <option value="">Select Type</option>
+      <option value="sale">Sale</option>
+      <option value="rent">Rent</option>
+   
+    </select>
+
     {/* Features */}
     <input
             type="text"
@@ -286,6 +317,15 @@ export default function CreateListing() {
       onChange={handleChange}
       value={formData.floorPlan}
     />
+    <input
+            type="number"
+            placeholder="Enter number of Square Footage"
+            className="border p-3 rounded-lg"
+            id="area"
+            required
+            onChange={handleChange}
+            value={formData.area}
+          />
 
     {/* Checkbox Fields */}
     <div className="flex gap-6 flex-wrap">

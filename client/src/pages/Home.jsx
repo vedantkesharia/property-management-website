@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
+import { motion } from "framer-motion"; // Importing Framer Motion
 import "swiper/css/bundle";
 import ListingItem from "../components/ListingItem";
-import image1 from "../images/image2.jpeg"
-import image2 from "../images/image3.jpeg"
-import image3 from "../images/image4.jpeg"
+import image1 from "../images/image2.jpeg";
+import image2 from "../images/image3.jpeg";
+import image3 from "../images/image4.jpeg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,7 +17,9 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
+ 
   SwiperCore.use([Navigation]);
 
   useEffect(() => {
@@ -77,10 +80,18 @@ export default function Home() {
     autoplay: true,
     autoplaySpeed: 3000,
   };
+  const sliderSettings = {
+    ...settings,
+    beforeChange: (oldIndex, newIndex) => {
+      setCurrentSlide(newIndex); // Update the current slide index
+    },
+  };
   return (
     <div className="font-serif">
+      
       {/* Updated Hero Section */}
       <div className="relative flex items-start justify-start" style={{ height: "100vh", width: "100%" }}>
+        
   {/* Static Textbox */}
   <div className="absolute right-32 top-12 z-10">
     <div className="bg-white bg-opacity-30 p-6 rounded-lg shadow-lg border border-yellow-300 max-w-xs">
@@ -125,31 +136,60 @@ export default function Home() {
   </div>
 
   {/* Slider */}
-  <Slider {...settings} className="w-full h-full">
-    {images.map((image, index) => (
-      <div key={index} className="relative h-full w-full">
-        <div
-          className="flex items-center justify-start h-full w-full"
-          style={{
-            backgroundImage: `url(${image.url})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            height: "100vh",
-            width: "100%",
-          }}
-        >
-          {/* Sliding Text */}
-          <div className="text-left p-2 rounded align-center ml-2 max-w-lg">
-            <h1 className="text-3xl lg:text-5xl font-bold tracking-wider text-white mb-4">
-              {image.title}
-            </h1>
-            <p className="text-white text-xl lg:text-xl">{image.description}</p>
+
+  <Slider {...sliderSettings} className="w-full h-full">
+      {images.map((image, index) => (
+        <div key={index} className="relative h-full w-full">
+          <div
+            className="flex items-center justify-start h-full w-full"
+            style={{
+              backgroundImage: `url(${image.url})`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              height: "100vh",
+              width: "100%",
+            }}
+          >
+            {/* Sliding Text */}
+            <div className="text-left p-2 rounded align-center ml-2 max-w-lg">
+              <motion.h1
+                className="text-3xl lg:text-5xl font-bold tracking-wider text-white mb-4"
+                key={`title-${index}-${currentSlide}`}
+                initial={{ x: 300, opacity: 0 }}
+                animate={{
+                  x: currentSlide === index ? 0 : 300,
+                  opacity: currentSlide === index ? 1 : 0,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: "easeOut",
+                }}
+              >
+                {image.title}
+              </motion.h1>
+              <motion.p
+                className="text-white text-xl lg:text-xl"
+                key={`desc-${index}-${currentSlide}`}
+                initial={{ x: 300, opacity: 0 }}
+                animate={{
+                  x: currentSlide === index ? 0 : 300,
+                  opacity: currentSlide === index ? 1 : 0,
+                }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.2,
+                  ease: "easeOut",
+                }}
+              >
+                {image.description}
+              </motion.p>
+            </div>
           </div>
         </div>
-      </div>
-    ))}
-  </Slider>
+      ))}
+    </Slider>
+
 </div>
 
       <div className="w-full flex flex-col items-center justify-center my-16 px-4">
@@ -161,26 +201,7 @@ export default function Home() {
     
       {/* Listings results for offer, sale and rent */}
       <div className="max-w-8xl p-3 items-center flex flex-col gap-8 my-10">
-        {offerListings && offerListings.length > 0 && (
-          <div className="">
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-600">
-                Recent offers
-              </h2>
-              <Link
-                className="text-sm text-blue-800 hover:underline"
-                to={"/search?offer=true"}
-              >
-                Show more offers
-              </Link>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              {offerListings.map((listing) => (
-                <ListingItem listing={listing} key={listing._id} />
-              ))}
-            </div>
-          </div>
-        )}
+       
         {rentListings && rentListings.length > 0 && (
           <div className="">
             <div className="my-3">
@@ -202,8 +223,27 @@ export default function Home() {
           </div>
         )}
 
-
-        {saleListings && saleListings.length > 0 && (
+ {/* {offerListings && offerListings.length > 0 && (
+          <div className="">
+            <div className="my-3">
+              <h2 className="text-2xl font-semibold text-slate-600">
+                Recent offers
+              </h2>
+              <Link
+                className="text-sm text-blue-800 hover:underline"
+                to={"/search?offer=true"}
+              >
+                Show more offers
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              {offerListings.map((listing) => (
+                <ListingItem listing={listing} key={listing._id} />
+              ))}
+            </div>
+          </div>
+        )} */}
+        {/* {saleListings && saleListings.length > 0 && (
           <div className="w-full lg:w-auto mx-auto lg:flex lg:flex-col">
             <div className="my-3">
               <h2 className="text-2xl font-semibold text-slate-600">
@@ -222,7 +262,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* services */}

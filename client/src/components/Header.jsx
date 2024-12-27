@@ -45,7 +45,7 @@ export default function Header() {
 
   return (
     <header className="bg-[#161D2D]">
-    <div className="flex justify-between items-center max-w-6xl m-auto p-3">
+    <div className="flex justify-between items-center max-w-6xl m-auto px-3 py-10">
       {/* Logo */}
       <Link to="/">
         <img
@@ -84,8 +84,8 @@ export default function Header() {
       <ul className="flex gap-4">
         <Link to="/">
           <li
-            className={`hidden sm:inline text-white hover:text-cream-200 transition-colors duration-200 ${
-              activePage === "home" ? "text-[#C1AD8C] underline" : ""
+            className={`hidden sm:inline  hover:text-cream-200 transition-colors duration-200 ${
+              activePage === "home" ? "text-[#C1AD8C] underline" : "text-white"
             }`}
           >
             HOME
@@ -93,8 +93,8 @@ export default function Header() {
         </Link>
         <Link to="/search">
           <li
-            className={`hidden sm:inline text-white hover:text-cream-200 transition-colors duration-200 ${
-              activePage === "properties" ? "text-[#C1AD8C] underline" : ""
+            className={`hidden sm:inline  hover:text-cream-200 transition-colors duration-200 ${
+              activePage === "properties" ? "text-[#C1AD8C] underline" : "text-white"
             }`}
           >
             PROPERTIES
@@ -102,8 +102,8 @@ export default function Header() {
         </Link>
         <Link to="/about">
           <li
-            className={`hidden sm:inline text-white hover:text-cream-200 transition-colors duration-200 ${
-              activePage === "about" ? "text-[#C1AD8C] underline" : ""
+            className={`hidden sm:inline  hover:text-cream-200 transition-colors duration-200 ${
+              activePage === "about" ? "text-[#C1AD8C] underline" : "text-white"
             }`}
           >
             ABOUT

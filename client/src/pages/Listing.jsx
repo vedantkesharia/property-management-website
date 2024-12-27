@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { motion } from "framer-motion";
+
+
+
 import {
   FaBath,
   FaBed,
@@ -63,7 +67,14 @@ export default function Listing() {
   if (error) {
     return <div className="text-center text-red-500">Something went wrong!</div>;
   }
-
+  const slideUpAnimation = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+  const slideInLeftAnimation = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+  };
   return listing && (
     <div className="bg-white">
       {/* Main Image Gallery */}
@@ -175,68 +186,94 @@ export default function Listing() {
               </div>
             </div>
 
-            {/* Property Overview */}
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-6">Property Details</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="flex flex-col items-center p-4 bg-white rounded-lg">
-                  <FaBed className="text-2xl text-gray-600 mb-2" />
-                  <span className="text-sm text-gray-500">Bedrooms</span>
-                  <span className="font-bold">{listing.bedrooms}</span>
-                </div>
-                <div className="flex flex-col items-center p-4 bg-white rounded-lg">
-                  <FaBath className="text-2xl text-gray-600 mb-2" />
-                  <span className="text-sm text-gray-500">Bathrooms</span>
-                  <span className="font-bold">{listing.bathrooms}</span>
-                </div>
-                <div className="flex flex-col items-center p-4 bg-white rounded-lg">
-                  <FaChair className="text-2xl text-gray-600 mb-2" />
-                  <span className="text-sm text-gray-500">Area</span>
-                  <span className="font-bold">{listing.area} sqft</span>
-                </div>
-                <div className="flex flex-col items-center p-4 bg-white rounded-lg">
-                  <FaParking className="text-2xl text-gray-600 mb-2" />
-                  <span className="text-sm text-gray-500">Parking</span>
-                  <span className="font-bold">{listing.parking ? "Yes" : "No"}</span>
-                </div>
-              </div>
-            </div>
+            <motion.div
+      className="bg-gray-50 rounded-lg p-6"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={slideUpAnimation}
+    >
+      <h2 className="text-2xl font-semibold mb-6">Property Details</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="flex flex-col items-center p-4 bg-white rounded-lg">
+          <FaBed className="text-2xl text-gray-600 mb-2" />
+          <span className="text-sm text-gray-500">Bedrooms</span>
+          <span className="font-bold">{listing.bedrooms}</span>
+        </div>
+        <div className="flex flex-col items-center p-4 bg-white rounded-lg">
+          <FaBath className="text-2xl text-gray-600 mb-2" />
+          <span className="text-sm text-gray-500">Bathrooms</span>
+          <span className="font-bold">{listing.bathrooms}</span>
+        </div>
+        <div className="flex flex-col items-center p-4 bg-white rounded-lg">
+          <FaChair className="text-2xl text-gray-600 mb-2" />
+          <span className="text-sm text-gray-500">Area</span>
+          <span className="font-bold">{listing.area} sqft</span>
+        </div>
+        <div className="flex flex-col items-center p-4 bg-white rounded-lg">
+          <FaParking className="text-2xl text-gray-600 mb-2" />
+          <span className="text-sm text-gray-500">Parking</span>
+          <span className="font-bold">{listing.parking ? "Yes" : "No"}</span>
+        </div>
+      </div>
+    </motion.div>
 
-            {/* Description */}
-            <div className="bg-gray-50 rounded-lg p-6">
+          <motion.div
+      className="bg-gray-50 rounded-lg p-6"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={slideUpAnimation}
+    >
+            
               <h2 className="text-2xl font-semibold mb-4">Description</h2>
               <p className="text-gray-600 leading-relaxed whitespace-pre-line">
                 {listing.description}
               </p>
-            </div>
+              </motion.div>
 
             {/* Features */}
+
             {listing.features && (
               <div className="bg-gray-50 rounded-lg p-6">
                 <h2 className="text-2xl font-semibold mb-6">Features</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <motion.div
+                  className="grid grid-cols-2 md:grid-cols-3 gap-4"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={slideUpAnimation}
+                  >
                   {listing.features.map((feature, index) => (
                     <div key={index} className="flex items-center gap-2">
                       <FaCheck className="text-green-500" />
                       <span>{feature}</span>
                     </div>
                   ))}
-                </div>
+                </motion.div>
               </div>
             )}
 
              {/* Community Features */}
              {listing.communityFeatures && listing.communityFeatures.length > 0 && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
+              <div className="bg-gray-50 rounded-lg p-6 shadow-sm">
                 <h2 className="text-2xl font-bold mb-6">Community Features</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {/* <div className="grid grid-cols-2 md:grid-cols-3 gap-4"> */}
+               
+                  <motion.div
+                  className="grid grid-cols-2 md:grid-cols-3 gap-4"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={slideUpAnimation}
+                  >
                   {listing.communityFeatures.map((feature, index) => (
                     <div key={index} className="flex items-center gap-2">
                       <FaCheck className="text-green-500" />
                       <span>{feature}</span>
                     </div>
                   ))}
-                </div>
+                </motion.div>
               </div>
             )}
 
@@ -253,19 +290,26 @@ export default function Listing() {
             )}
 
             {/* Map */}
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-6">Location</h2>
-              {listing.mapUrl ? (
-                <div 
-                  dangerouslySetInnerHTML={{ __html: listing.mapUrl }} 
-                  className="w-full h-[400px] rounded-lg overflow-hidden"
-                />
-              ) : (
-                <div className="w-full h-[400px] bg-gray-200 rounded-lg flex items-center justify-center">
-                  <span className="text-gray-500">Map not available</span>
-                </div>
-              )}
-            </div>
+            <motion.div
+      className="bg-gray-50 rounded-lg p-6"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={slideInLeftAnimation}
+    >
+      <h2 className="text-2xl font-semibold mb-6">Location</h2>
+      {listing.mapUrl ? (
+        <div
+          dangerouslySetInnerHTML={{ __html: listing.mapUrl }}
+          className="w-full h-[400px] rounded-lg overflow-hidden"
+        />
+      ) : (
+        <div className="w-full h-[400px] bg-gray-200 rounded-lg flex items-center justify-center">
+          <span className="text-gray-500">Map not available</span>
+        </div>
+      )}
+    </motion.div>
+ 
           </div>
 
           {/* Right Column - Contact Card */}

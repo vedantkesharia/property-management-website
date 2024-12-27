@@ -38,6 +38,8 @@ export default function Header() {
         return "about";
       case "/profile":
         return "profile";
+      case "/contact":
+        return "contact";
       default:
         return "";
     }
@@ -45,7 +47,7 @@ export default function Header() {
 
   return (
     <header className="bg-[#161D2D]">
-    <div className="flex justify-between items-center max-w-6xl m-auto px-3 py-10">
+    <div className="flex justify-between items-center max-w-6xl m-auto px-3 py-6">
       {/* Logo */}
       <Link to="/">
         <img
@@ -107,6 +109,15 @@ export default function Header() {
             }`}
           >
             ABOUT
+          </li>
+        </Link>
+        <Link to="/contact">
+          <li
+            className={`hidden sm:inline  hover:text-cream-200 transition-colors duration-200 ${
+              activePage === "contact" ? "text-[#C1AD8C] underline" : "text-white"
+            }`}
+          >
+            CONTACT US
           </li>
         </Link>
         <Link to="/profile">

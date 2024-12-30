@@ -37,7 +37,7 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
     floorPlan: {
-      type: String,
+      type: Array,
       required: false,
     },
 
@@ -61,7 +61,7 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
 
-    area:{
+    area: {
       type: Number,
       required: true,
     },
@@ -75,7 +75,22 @@ const listingSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-
+    favproperties: {
+      type: Boolean,
+      required: false,
+    },
+    contactemail: {
+      type: String,
+      required: false,
+    },
+    contactnumber: {
+      type: String,
+      required: false,
+    },
+    futurebuy: {
+      type: Boolean,
+      required: false,
+    },
     imageUrls: {
       type: Array,
       required: true,

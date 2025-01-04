@@ -1,4 +1,5 @@
 import Listing from "../models/listing.model.js";
+import News from "../models/news.model.js";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 import bcryptjs from "bcryptjs";
@@ -67,6 +68,26 @@ export const getUserListing = async (req, res, next) => {
     return next(errorHandler(401, "You can view you own listing"));
   }
 };
+
+
+export const getUserNews = async (req, res, next) => {
+  const userId = req.params.id;
+
+  if (req.user.id === userId) {
+    try {
+      const news = await News.find({ userRef: userId });
+      res.status(200).json(news);
+      next(error);
+    }
+    
+catch (error) {
+  next(error);
+}
+ } else {
+    return next(errorHandler(401, "You can view you own news"));
+  }
+};
+
 
 export const getUser = async (req, res, next) => {
   try {

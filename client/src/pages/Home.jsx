@@ -6,6 +6,7 @@ import SwiperCore from "swiper";
 import { motion } from "framer-motion"; // Importing Framer Motion
 import "swiper/css/bundle";
 import ListingItem from "../components/ListingItem";
+import NewsItem from "../components/NewsItem";
 import image1 from "../images/image2.jpeg";
 import image2 from "../images/image3.jpeg";
 import image3 from "../images/image4.jpeg";
@@ -18,11 +19,28 @@ export default function Home() {
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
-
+  const [newsList, setNewsList] = useState([]);
+  const [loadingNews, setLoadingNews] = useState(true);
+  const [errorNews, setErrorNews] = useState(false);
  
   SwiperCore.use([Navigation]);
 
   useEffect(() => {
+
+    const fetchNews = async () => {
+      try {
+        const res = await fetch("/api/news/get");
+        const data = await res.json();
+        setNewsList(data);
+        setLoadingNews(false);
+        setErrorNews(false);
+        // fetchNews();
+      } catch (error) {
+        setErrorNews(true);
+        setLoadingNews(false);
+      }
+    };
+
     const fetchOfferListings = async () => {
       try {
         const res = await fetch("/api/listing/get?offer=true&limit=4");
@@ -54,6 +72,7 @@ export default function Home() {
         console.log(error);
       }
     };
+    fetchNews();
     fetchOfferListings();
   }, []);
 
@@ -265,6 +284,24 @@ export default function Home() {
         )} */}
       </div>
 
+{/* news */}
+
+<section className="my-8">
+        <h2 className="text-4xl font-bold mb-6">Latest News</h2>
+        {loadingNews ? (
+          <div className="text-center my-7 text-2xl">Loading...</div>
+        ) : errorNews ? (
+          <div className="text-center my-7 text-2xl">Something went wrong!</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {newsList.map((news) => (
+              <NewsItem key={news._id} news={news} />
+            ))}
+          </div>
+        )}
+      </section>
+
+
       {/* services */}
       <div className="w-full flex flex-col items-center px-4 py-16">
         {/* Heading with line decoration */}
@@ -302,14 +339,8 @@ export default function Home() {
             </button>
           </div>
         </div>
-
-
       </div>
     </div>
-
-
-
-
   );
 }
 
